@@ -18,12 +18,14 @@ versions32 :: [Version]
 versions32 = ["ghc7103", "ghc802", "ghc822", "ghc844"]
 
 versions64 :: [Version]
-versions64 = ["ghc822", "ghc844", "ghc864"]
+versions64 = ["ghc822", "ghc844", "ghc864", "ghc-8.6.5", "ghc-8.8.2", "ghc-8.10.1"]
 
 spec :: Spec
-spec = describe "should succesfully deserialize x32 interface for" $ do
-   traverse_ (deserialize check32) (("x32/" <>) <$> versions32)
-   traverse_ (deserialize check64) (("x64/" <>) <$> versions64)
+spec = do
+  describe "should succesfully deserialize x32 interface for" $
+    traverse_ (deserialize check32) (("x32/" <>) <$> versions32)
+  describe "should succesfully deserialize x64 interface for" $
+    traverse_ (deserialize check64) (("x64/" <>) <$> versions64)
 
 check32 :: Iface.Interface -> IO ()
 check32 iface = do
